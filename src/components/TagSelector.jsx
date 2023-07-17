@@ -17,7 +17,27 @@ function TagSelector() {
     const articles = document.querySelectorAll("#latest-articles .article");
     // TODO Implement filtering
     // 1. For each article, if selection is not empty or the selection includes the article's category, remove hidden class
-    // 2. Otherwise, add class hidden
+    function fetchFilteredArticles() {
+      articles.forEach(articles => {
+        if (!selection.length || selection.includes(articles.dataset.category)) {
+          articles.classList.remove("hidden");
+        }
+        else {
+          articles.classList.add("hidden");
+        }
+      });
+    
+      }
+      // 2. How to add backwards compatibility
+      if("startViewTransition" in document){
+        document.startViewTransition(()=>{
+        fetchFilteredArticles();
+      })}
+      else
+      {
+        fetchFilteredArticles();
+      }
+    
   }, [selection]);
 
   return (
@@ -28,7 +48,7 @@ function TagSelector() {
         return (
           <button
             key={category.slug}
-            className={`btn btn-sm btn-outline-primary me-2 mb-2`}
+            className={`btn btn-sm btn-outline-primary me-2 mb-2 ${isActive ? "animate-bounce": ""} `}
             onClick={() => {
               if (isActive) {
                 setSelection(selection.filter((x) => x !== category.slug));

@@ -1,1 +1,25 @@
 /** */
+
+@keyframes fade-in {
+    from{
+        opacity: 0;
+        scale: 0;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+@keyframes exit {
+    
+}
+::view-transition-group(*){
+    animation-duration: 0.3s;
+}
+
+::view-transition-old(*):only-child{
+    animation-name: scale-out;
+}
+::view-transition-new(*):only-child{
+     animation-name: fade-in;
+}
